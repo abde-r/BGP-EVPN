@@ -18,3 +18,5 @@ sudo systemctl enable docker --now
 sudo usermod -aG docker $USER
 getent group docker
 newgrp docker
+sudo apt-get update
+sudo apt  install docker-compose -y

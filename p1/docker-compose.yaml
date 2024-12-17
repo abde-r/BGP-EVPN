@@ -1,5 +1,27 @@
-version: '3.8'
+version: "3.8"
+
 services:
- busybox:
-   image: busybox
-   command: sh
+  alpine-host:
+    image: alpine:latest
+    container_name: host_aelasri
+    command: ["/bin/sh", "-c", "apk add --no-cache busybox && sleep infinity"]
+    volumes:
+      - alpine-data:/data
+    restart: unless-stopped
+  
+  frr-router:
+    image: frrouting/frr:latest
+    container_name: frr_router_aelasri
+    command: /bin/bash -c "service frr start && tail -f /dev/null"
+    volumes:
+      - ./frr-config:/etc/frr
+    ports:
+      - "2601:2601"  # BGP port
+      - "2604:2604"  # OSPF port
+      - "2605:2605"  # IS-IS port
+    restart: unless-stopped
+    privileged: true
+
+volumes:
+  alpine-data:
+  frr-config:
