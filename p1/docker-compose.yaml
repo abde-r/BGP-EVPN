@@ -4,21 +4,32 @@ services:
   alpine-host:
     image: alpine:latest
     container_name: host_aelasri
-    command: ["/bin/sh", "-c", "apk add --no-cache busybox && sleep infinity"]
+    command: ["/bin/sh", "-c", "apk add busybox && sleep infinity"]
     volumes:
       - alpine-data:/data
     restart: unless-stopped
-  
   frr-router:
     image: frrouting/frr:latest
     container_name: frr_router_aelasri
-    command: /bin/bash -c "service frr start && tail -f /dev/null"
+    command: >
+      bash -c "
+      echo 'zebra=yes
+      bgpd=yes
+      ospfd=yes
+      isisd=yes' > /etc/frr/daemons &&
+      /usr/lib/frr/zebra -d &&
+      /usr/lib/frr/bgpd -d &&
+      /usr/lib/frr/ospfd -d &&
+      /usr/lib/frr/isisd -d &&
+      sleep infinity
+      "
     volumes:
       - ./frr-config:/etc/frr
     ports:
-      - "2601:2601"  # BGP port
-      - "2604:2604"  # OSPF port
-      - "2605:2605"  # IS-IS port
+      - "2601:2601"  # Zebra
+      - "2605:2605"  # IS-IS
+      - "2604:2604"  # OSPF
+      - "2606:2606"  # BGP
     restart: unless-stopped
     privileged: true
 
