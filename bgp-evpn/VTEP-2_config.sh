@@ -3,7 +3,6 @@ ip link set up dev vxlan10
 
 vtysh
 
-config t
 
 hostname VTEP_aelasri-2
 
