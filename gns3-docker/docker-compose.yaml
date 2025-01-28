@@ -1,11 +1,11 @@
-# version: "3.8"
+version: "3.8"
 
 services:
   alpine-host:
     image: alpine:latest
     container_name: host_aelasri
     hostname: host_aelasri
-    command:
+    command: >
       sh -c "
         tail -f /dev/null"
     restart: unless-stopped
