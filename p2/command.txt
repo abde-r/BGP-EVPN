@@ -1,0 +1,16 @@
+/usr/sbin/ip link add br0 type bridge
+/usr/sbin/ip link set br0 up 
+/usr/sbin/ip addr add 10.1.1.1/24 dev eth0
+
+/usr/sbin/ip link add name vxlan10 type vxlan id 10 dev eth0 group 239.1.1.1 dstport 4789
+
+/usr/sbin/ip addr add 20.1.1.1/24 dev vxlan10
+/usr/sbin/ip link set dev vxlan10 up
+/usr/sbin/ip -d link show  vxlan10
+
+brctl addif br0 eth1
+brctl addif br0 vxlan10
+
+/usr/sbin/ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.1 local 10.1.1.2 dstport 4789
+
+
