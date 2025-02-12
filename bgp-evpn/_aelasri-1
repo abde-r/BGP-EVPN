@@ -1,9 +1,6 @@
 vtysh
 configure t
 
-hostname VTEP_aelasri-1
-no ipv6 forwarding
-
 interface eth0
 ip address 10.1.1.1/30
 
@@ -23,8 +20,8 @@ neighbor ibgp update-source lo
 bgp listen range 1.1.1.0/29 peer-group ibgp
 
 address-family l2vpn evpn
-neighbor ibpg activate
-neighbor ibpg route-reflector-client
+neighbor ibgp activate
+neighbor ibgp route-reflector-client
 exit-address-family
 
 router ospf
