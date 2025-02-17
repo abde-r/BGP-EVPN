@@ -1,3 +1,0 @@
-# eth1 interface configuration
-# Assigning IP addresses to the interface
-ip addr add 20.1.1.1/24 dev eth1
