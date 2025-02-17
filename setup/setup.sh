@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+# Setup of GNS3 & Docker for ubuntu
 # Install & Configure GNS3
 sudo apt update
 sudo apt upgrade
@@ -20,6 +21,3 @@ getent group docker
 newgrp docker
 sudo apt-get update
 sudo apt  install docker-compose -y
-
-# docker rm -vf $(docker ps -aq)
-# docker rmi -f $(docker images -aq)
